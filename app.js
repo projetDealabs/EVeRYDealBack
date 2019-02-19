@@ -30,8 +30,8 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 
 //configuration de nunjucks
 nunjucks.configure('vues',{
-	autoescape : true,    //echaper les caractère html presents dans dif const
-	express : app		//
+	autoescape : true,    
+	express : app		
 });
 
 //Définition et mise en place du port d'écoute
