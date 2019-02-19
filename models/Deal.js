@@ -8,7 +8,8 @@ const dealSchema = new mongoose.Schema({
 	lien : String,
 	description : String,
 	picture : String,
-	dateFin : Date
+	dateFin : Date,
+	compteur : Number,
 });
 
 const Deal = mongoose.model('Deal', dealSchema);

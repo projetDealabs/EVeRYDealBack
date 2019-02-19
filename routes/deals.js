@@ -35,6 +35,21 @@ res.render('deals/show.html', {deal: deal})
 err=> res.status(500).send(err));
 });
 
+//voter un deal 
+
+router.get('/up/:id', (req,res)=>{
+	Deal.findById(req.params.id).populate().then(deal=>{
+		deal.compteur=deal.compteur+1;
+		deal.save();
+	})
+});
+
+router.get('/down/:id', (req,res)=>{
+	Deal.findById(req.params.id).populate().then(deal=>{
+		deal.compteur=deal.compteur-1;
+		deal.save();
+	})
+});
 
 
 router.post('/', (req, res)=>{
@@ -46,6 +61,7 @@ router.post('/', (req, res)=>{
 		deal.prix = req.body.prix;
 		deal.lien = req.body.lien;
 		deal.dateFin=req.body.dateFin;
+		deal.compteur=0; 
 
 		if(req.file) deal.picture = req.file.filename;
 
