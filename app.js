@@ -1,39 +1,29 @@
 
 //Définition des modules
-const express = require("express"); 
-const app = express();
+const express = require('express'); 
+const bodyParser = require('body-parser');
 const mongoose = require("mongoose"); 
-const nunjucks = require('nunjucks'); //permet de generer nos pages web, inclure des donnés à l’interrieur …
-//const bodyParser = require('body-parser'); // Charge le middleware de gestion des paramètres   
-const multer = require('multer'); // gere les champs de type fichier 
 
-//permet de traiter les champs de type fichier et d’enregistrer ce fichier dans un rep dans notre appli
-const upload = multer({ 
-
-dest: __dirname + '/uploads'
-});
-
-//connexion à la BDD
+const app = express();
 mongoose.connect('mongodb://localhost/dealabs'); 
 
-//app.use(bodyParser.urlencoded());
-app.use(upload.single('file')); // enregistrer les fichier 'file' dans le dossier uploads
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
 
-//acceder au fichier bootstrap.min.css depuis un navigateur   
-app.use('/css', express.static(__dirname +'/node_modules/bootstrap/dist/css'));
+//const multer = require('multer'); // gere les champs de type fichier 
+//permet de traiter les champs de type fichier et d’enregistrer ce fichier dans un rep dans notre appli
+/*const upload = multer({ 
+dest: __dirname + '/uploads'
+});
+app.use('/uploads', express.static(__dirname + '/uploads')); 
+app.use(upload.single('file')); // enregistrer les fichier 'file' dans le dossier uploads*/
+let Deal = require('./Deal/model.js');
 
 //utiliser les routeurs dèja définis 
-app.use('/',require('./routes/deals'));
-
-
-app.use('/uploads', express.static(__dirname + '/uploads')); 
-
-//configuration de nunjucks
-nunjucks.configure('vues',{
-	autoescape : true,    
-	express : app		
-});
+app.use('/',require('./Deal/route'));
 
 //Définition et mise en place du port d'écoute
-
-app.listen(3000);
+let param=new Deal();
+param.name="frfr";
+console.log(param);
+app.listen(8080);
