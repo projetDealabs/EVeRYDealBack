@@ -18,14 +18,13 @@ module.exports = {
     },
 
  creerUnDeal : (req,res)=>{
-	console.log(req.body);
 	let deal= new Deal({
 		name:req.body.name,
 		prix:req.body.prix,
-		//description:req.body.description,
-		//lien:req.body.lien,
-		//dateFin:req.body.dateFin,
-		compteur:0,	
+		description:req.body.description,
+		lien:req.body.lien,
+		dateFin:req.body.dateFin,
+		compteur:0,
 	})
 	//if(req.file) deal.picture = req.file.filename;
 	return deal.save().then(()=> {
