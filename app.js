@@ -3,6 +3,7 @@
 const express = require('express'); 
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose"); 
+const apiRouter = require('./apiRouter').router;
 
 const app = express();
 mongoose.connect('mongodb://localhost/dealabs'); 
@@ -22,8 +23,8 @@ let Deal = require('./Deal/model.js');
 //utiliser les routeurs dèja définis 
 app.use('/',require('./Deal/route'));
 
+app.use('/api',apiRouter);
+
 //Définition et mise en place du port d'écoute
-let param=new Deal();
-param.name="frfr";
-console.log(param);
+
 app.listen(8080);
