@@ -3,6 +3,7 @@
 const express = require('express'); 
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose"); 
+//const apiRouter = require('./apiRouter').router;
 
 const app = express();
 mongoose.connect('mongodb://localhost/dealabs'); 
@@ -18,12 +19,14 @@ dest: __dirname + '/uploads'
 app.use('/uploads', express.static(__dirname + '/uploads')); 
 app.use(upload.single('file')); // enregistrer les fichier 'file' dans le dossier uploads*/
 let Deal = require('./Deal/model.js');
+let User = require('./User/model.js');
 
 //utiliser les routeurs dèja définis 
 app.use('/',require('./Deal/route'));
+app.use('/',require('./User/route'));
+
+//app.use('/api',apiRouter);
 
 //Définition et mise en place du port d'écoute
-let param=new Deal();
-param.name="frfr";
-console.log(param);
+
 app.listen(8080);
