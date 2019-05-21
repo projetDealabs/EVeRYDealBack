@@ -1,14 +1,14 @@
-
 //Définition des modules
-const express = require('express'); 
+const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require("mongoose"); 
+const mongoose = require("mongoose");
 //const apiRouter = require('./apiRouter').router;
+var http = require('http');
 
 const app = express();
-mongoose.connect('mongodb://localhost/dealabs'); 
+mongoose.connect('mongodb://localhost/dealabs');
 
-app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //const multer = require('multer'); // gere les champs de type fichier 
@@ -19,14 +19,20 @@ dest: __dirname + '/uploads'
 app.use('/uploads', express.static(__dirname + '/uploads')); 
 app.use(upload.single('file')); // enregistrer les fichier 'file' dans le dossier uploads*/
 let Deal = require('./Deal/model.js');
-let User = require('./User/model.js');
+//let User = require('./User/model.js');
 
 //utiliser les routeurs dèja définis 
-app.use('/',require('./Deal/route'));
+app.use('/', require('./Deal/route'));
 app.use('/',require('./User/route'));
 
 //app.use('/api',apiRouter);
 
 //Définition et mise en place du port d'écoute
 
-app.listen(8080);
+var server = http.createServer(app);
+server.listen(8282, function () {
+  console.log("Node server running on http://localhost:8083");
+});
+
+
+module.exports = app;
