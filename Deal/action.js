@@ -3,20 +3,9 @@ const Deal = require('./model');
 
 module.exports = {
 
-    creerDeal(req, res) {
-        let deal = new Deal({
-            name: req.body.name,
-            prix: req.body.prix,
-            username : req.body.username,
-            description: req.body.description,
-            lien: req.body.lien,
-            dateFin: req.body.dateFin,
-            compteur: 0,
-            comments : req.body.comments,
-           
-        })
+    creerDeal(req,res) {
         
-        process.creerUnDeal(deal)
+        process.creerUnDeal(req)
         .then((result)=>{
             res.status(200).json(result)
         })
@@ -36,8 +25,15 @@ module.exports = {
        
     },
     ajoutComment(req, res) {
-        process.ajoutComment(req, res);
+        process.ajoutComment(req,res)
+        .then((result)=>{
+            res.status(200).json(result)
+        })
+        .catch((err)=>{
+            res.status(400).json(err)
+        })
     },
+       
 
     afficherComment(req, res) {
         process.afficherComment(req, res);
@@ -48,9 +44,15 @@ module.exports = {
     },
 
     miseAjourDeal(req, res) {
-        process.miseAjourDeal(req, res);
+        process.miseAjourDeal(req,res)
+        .then((result)=>{
+            res.status(200).json(result)
+        })
+        .catch((err)=>{
+            res.status(400).json(err)
+        })
     },
-
+        
     supprimerDeal(req, res) {
         process.supprimerDeal(req, res);
     },

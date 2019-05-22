@@ -7,7 +7,7 @@ let dealSchema = new mongoose.Schema({
     prix: Number,
     username : String,
     description: String,
-    lien: Number,
+    lien: String,
     picture: String,
     dateFin: Date,
     compteur: Number,

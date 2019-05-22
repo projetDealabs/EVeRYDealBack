@@ -7,7 +7,17 @@ const action = require('./action');
 
 module.exports = {
     
-    creerUnDeal: (deal) => {
+    creerUnDeal: (req) => {
+
+        let deal = new Deal({
+            name: req.body.name,
+            prix: req.body.prix,
+            username : req.body.username,
+            description: req.body.description,
+            lien: req.body.lien,
+            dateFin: req.body.dateFin,
+            compteur: 0,
+            comments : req.body.comments});
 
         //if(req.file) deal.picture = req.file.filename;
         return new Promise((resolve,reject)=>{
@@ -37,8 +47,9 @@ module.exports = {
     ajoutComment :async (req,res)=>{
         const deal = await Deal.findOne({ _id: req.params.id });
           const comment = new Comment({
-            content : req.body.content,
-            djadja:req.body.djadja
+            contenu : req.body.contenu,
+            date : Date(),
+            username : deal.username
         });
           console.log(comment);
           //comment.content = req.body.content;
@@ -49,22 +60,15 @@ module.exports = {
 
             deal.comments.push(comment.id); 
              await deal.save(function(){})
-            //  await deal.save(function (err) {
-            //  if (err) {
-            //      res.json({ 'erreur': err });
-            //  } else {
-            //      res.json({ 'OK': deal });
-            //  }
-            // });
              res.send(comment);
             },
 
-						afficherComment: async (req, res) => {
-							const deal = await Deal.findOne({ _id: req.params.id }).populate(
-								"comments"
-							);
-							res.send(deal);
-						},
+            afficherComment: async (req, res) => {
+			const deal = await Deal.findOne({ _id: req.params.id }).populate(
+			"comments"
+            );
+        	res.send(deal);
+				},
 
     miseAjourDeal: (req, res) => {
         Deal.findById(req.params.id, function (err, deal) {
@@ -73,13 +77,17 @@ module.exports = {
             deal.dateFin = req.body.dateFin;
             deal.description = req.body.description;
             deal.lien = req.body.lien;
-            deal.save(function (err) {
-                if (err) {
-                    res.json({ 'erreur': err });
-                } else {
-                    res.json({ 'MAJ': deal });
-                }
-            });
+            return new Promise((resolve,reject)=>{
+            
+                deal.save(function (err) {
+                    if (err) {
+                        reject({ 'KO': err });
+                    } else {
+                        resolve({ 'OK': deal });
+                    }
+                })
+                })
+            
         });
     },
 

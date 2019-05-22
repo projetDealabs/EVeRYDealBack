@@ -1,11 +1,9 @@
 const mongoose = require("mongoose");
 
 const comment_schema = new mongoose.Schema({
-  content: {
-    type: String,
-    require: "Content is Required"
-  },
-  djadja : Number,
+  contenu : String,
+  date : Date,
+  username : String,
   deal: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "model",

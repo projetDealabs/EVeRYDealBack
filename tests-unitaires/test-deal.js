@@ -70,7 +70,7 @@ describe('Deal', function () {
       })
       .end(function (err, res) {
 
-        res.should.have.status(200);
+       res.should.have.status(200);
         res.should.be.json;
         assert.typeOf('name', 'string', 'name doit etre de type string');
         //assert.typeOf('prix','Number', 'le prix doit etre de type number');
