@@ -78,12 +78,12 @@ describe('Deal', function () {
         //assert.typeOf('dateFin', 'date', 'dateFin doit etre de type date');
         assert.typeOf('description', 'string', 'description doit etre de type string');
         res.body.should.be.a('object');
-        res.body.should.have.property('OK');
-        res.body.OK.should.be.a('object');
-        res.body.OK.should.have.property('name');
-        res.body.OK.should.have.property('prix');
-        res.body.OK.should.have.property('lien');
-        res.body.OK.should.have.property('_id');
+        //res.body.should.have.property('OK');
+        res.body.should.be.a('object');
+        res.body.should.have.property('name');
+        res.body.should.have.property('prix');
+        res.body.should.have.property('lien');
+        res.body.should.have.property('_id');
         console.log(res.body);
         done();
       });
@@ -103,10 +103,10 @@ describe('Deal', function () {
   //       res.should.be.json;
   //       // assert.typeOf('content', 'string', 'name doit etre de type string');
   //       // res.body.should.be.a('object');
-  //       // res.body.should.have.property('OK');
-  //       // res.body.OK.should.be.a('object');
-  //       // res.body.OK.should.have.property('content');
-  //      // res.body.OK.should.have.property('_id');
+  //       
+  //       // res.body.should.be.a('object');
+  //       // res.body.should.have.property('content');
+  //      // res.body.should.have.property('_id');
   //       console.log(res.body);
   //       //done();
   //     });
@@ -130,10 +130,10 @@ describe('Deal', function () {
   //           response.should.have.status(200);
   //           response.should.be.json;
   //           response.body.should.be.a('object');
-  //           response.body.should.have.property('MAJ');
-  //           response.body.MAJ.should.be.a('object');
-  //           response.body.MAJ.should.have.property('name');
-  //           response.body.MAJ.should.have.property('_id');
+  //           
+  //           response.body.should.be.a('object');
+  //           response.body.should.have.property('name');
+  //           response.body.should.have.property('_id');
   //           console.log(res.body);
 
   //           done();
@@ -152,10 +152,10 @@ describe('Deal', function () {
   //           response.should.have.status(200);
   //           response.should.be.json;
   //           response.body.should.be.a('object');
-  //           response.body.should.have.property('supprimé');
-  //           response.body.supprimé.should.be.a('object');
-  //           response.body.supprimé.should.have.property('name');
-  //           response.body.supprimé.should.have.property('_id');
+  //         
+  //           response.body.should.be.a('object');
+  //           response.body.should.have.property('name');
+  //           response.body.should.have.property('_id');
 
   //           done();
   //         });

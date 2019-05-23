@@ -24,9 +24,9 @@ module.exports = {
             
         deal.save(function (err) {
             if (err) {
-                reject({ 'KO': err });
+                reject({erreur : "le deal ne peutt pas être ajouté"});
             } else {
-                resolve({ 'OK': deal });
+                resolve(  deal );
             }
         })
         })
@@ -36,9 +36,9 @@ module.exports = {
         return new Promise((resolve,reject)=>{
             Deal.findOne({_id: id},(err, deal)=> {
                 if (err) {
-                    reject({ 'KO': err });
+                    reject({ erreur : "le deal ne peut pas être ajouté"});
                 } else {
-                    resolve({ 'OK': deal });
+                    resolve( deal );
                 }    
             });
         })
@@ -81,9 +81,9 @@ module.exports = {
             
                 deal.save(function (err) {
                     if (err) {
-                        reject({ 'KO': err });
+                        reject("le deal ne peut pas être mis à jour");
                     } else {
-                        resolve({ 'OK': deal });
+                        resolve( deal );
                     }
                 })
                 })
