@@ -3,6 +3,8 @@ ObjectId = mongoose.Types.ObjectId;
 const Deal = require('./model');
 const Comment = require('./Comment');
 const action = require('./action');
+const binary = mongoose.Binary;
+
 
 
 module.exports = {
@@ -17,6 +19,7 @@ module.exports = {
             lien: req.body.lien,
             dateFin: req.body.dateFin,
             compteur: 0,
+            img:binary(req.files.uploadedFile.data),
             comments : req.body.comments});
 
         //if(req.file) deal.picture = req.file.filename;
@@ -49,7 +52,7 @@ module.exports = {
           const comment = new Comment({
             contenu : req.body.contenu,
             date : Date(),
-            username : deal.username
+            username : req.body.username
         });
           console.log(comment);
           //comment.content = req.body.content;

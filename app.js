@@ -2,12 +2,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
+const fileUpload = require('express-fileupload')
+
 //const apiRouter = require('./apiRouter').router;
 var http = require('http');
 
 const app = express();
 mongoose.connect('mongodb://localhost/dealabs');
-
+app.use(fileUpload());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
