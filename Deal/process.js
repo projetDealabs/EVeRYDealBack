@@ -19,10 +19,11 @@ module.exports = {
             lien: req.body.lien,
             dateFin: req.body.dateFin,
             compteur: 0,
-            img:binary(req.files.uploadedFile.data),
+            img:req.file.filename,//binary(req.files.uploadedFile.data),
             comments : req.body.comments});
 
         //if(req.file) deal.picture = req.file.filename;
+
         return new Promise((resolve,reject)=>{
             
         deal.save(function (err) {

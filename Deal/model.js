@@ -11,7 +11,7 @@ let dealSchema = new mongoose.Schema({
     picture: String,
     dateFin: Date,
     compteur: Number,
-    img:Buffer,
+    img:String,
     comments: [ {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment",
