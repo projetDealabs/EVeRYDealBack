@@ -1,38 +1,29 @@
-//Définition des modules
+//-----Définition des modules
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
-//const apiRouter = require('./apiRouter').router;
-var http = require('http');
-
-const app = express();
+const fileUpload = require('express-fileupload');
+const multer = require('multer');
 mongoose.connect('mongodb://localhost/dealabs');
-
+app.use(fileUpload());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//const multer = require('multer'); // gere les champs de type fichier 
-//permet de traiter les champs de type fichier et d’enregistrer ce fichier dans un rep dans notre appli
-/*const upload = multer({ 
+//-----upload image
+const upload = multer({ 
 dest: __dirname + '/uploads'
 });
 app.use('/uploads', express.static(__dirname + '/uploads')); 
-app.use(upload.single('file')); // enregistrer les fichier 'file' dans le dossier uploads*/
-let Deal = require('./Deal/model.js');
-//let User = require('./User/model.js');
+app.use(upload.single('file')); // enregistrer les fichier 'file' dans le dossier uploads
 
-//utiliser les routeurs dèja définis 
-app.use('/', require('./Deal/route'));
+
+//-----appel des routes
+app.use('/', require('./Deal/route'));  
 app.use('/',require('./User/route'));
 
-//app.use('/api',apiRouter);
 
-//Définition et mise en place du port d'écoute
-
-var server = http.createServer(app);
-server.listen(8282, function () {
-  console.log("Node server running on http://localhost:8083");
-});
-
+app.listen(8000);
+console.log("serveur démarré sur http://localhost:8282");
 
 module.exports = app;

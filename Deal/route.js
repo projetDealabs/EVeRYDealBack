@@ -4,8 +4,10 @@ app.use(bodyParser.json());
 const action = require('./action');
 const process = require('./process');
 
-app.post('/create', function (req, res) {
-    action.creerDeal(req, res);
+app.post('/create', action.creerDeal)
+
+app.put('/update/:id', function (req, res) {
+    action.miseAjourDeal(req, res);
 })
 
 app.post('/:id/comment', function async  (req, res) {
@@ -16,12 +18,10 @@ app.get('/:id/comment', function (req, res) {
     action.afficherComment(req, res);
 })
 
-app.get('/', function (req, res) {
-    action.afficherLesDeal(req, res);
+app.get('/', function (req,res) {
+    action.afficherLesDeal(req,res);
 })
-app.put('/update/:id', function (req, res) {
-    action.miseAjourDeal(req, res);
-});
+
 app.delete('/supp/:id', function (req, res) {
     action.supprimerDeal(req, res);
 });
