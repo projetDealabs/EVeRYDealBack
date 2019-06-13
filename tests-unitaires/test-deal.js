@@ -59,9 +59,9 @@ describe('Deal', function () {
     chai.request(server)
       .post('/create')
       .send({
-        name: 'samsung S9',
+        name: 'pc portable',
         prix: '400',
-        username : 'saluydt',
+        username : 'salim',
         description: 'test test',
         lien: 'test',
         dateFin: '2019-12-15',
