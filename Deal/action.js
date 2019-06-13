@@ -78,12 +78,24 @@ module.exports = {
     },
 
     voterPlus(req, res) {
-        process.voterPlus(req, res);
+        process.voterPlus(req, res)
+        .then((result) => {
+            res.status(200).json(result)
+        })
+        .catch((err) => {
+            res.status(400).json(err)
+        })
     },
 
 
     voterMoins(req, res) {
-        process.voterMoins(req, res);
+        process.voterMoins(req, res)
+        .then((result) => {
+            res.status(200).json(result)
+        })
+        .catch((err) => {
+            res.status(400).json(err)
+        })
     },
 
     afficherDealsUser(req, res) {

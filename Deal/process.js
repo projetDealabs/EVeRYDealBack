@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 ObjectId = mongoose.Types.ObjectId;
 const Deal = require('./model');
 const Comment = require('./Comment');
+const Vote = require('./Vote');
 const action = require('./action');
 
 module.exports = {
@@ -16,9 +17,9 @@ module.exports = {
             lien: req.body.lien,
             dateFin: req.body.dateFin,
             compteur: 0,
-            picture : req.files,
-            //  img: req.file.filename,
-            comments: req.body.comments
+           // picture : req.files.img,
+            comments: req.body.comments,
+            vote:req.body.vote,
         });
 
         return new Promise((resolve, reject) => {
@@ -117,22 +118,44 @@ module.exports = {
 
 
     voterPlus: (req, res) => {
-        Deal.findById(req.params.id).populate().then(deal => {
-            deal.compteur = deal.compteur + 1;
-            deal.save();
-            res.send(deal);
-            console.log(deal)
-        })
-    },
+        return new Promise((resolve, reject) => {
+            Deal.findById(req.params.id).populate().then(deal => {
+                deal.vote.forEach(element => {
+                    if (element==req.body.username){
+                        res=1;
+                    }
+                })
+                if(res>0){
+                    reject({ erreur: "vous avez deja voté pour ce deal" });   
+                }else {
+                    deal.compteur = deal.compteur + 1;
+                    deal.vote.push(req.body.username);
+                    deal.save();
+                    resolve(deal);
+                }
+             }) 
+            })
+        },
 
 
     voterMoins: (req, res) => {
-        Deal.findById(req.params.id).populate().then(deal => {
-            deal.compteur = deal.compteur - 1;
-            deal.save();
-            res.send(deal);
-            console.log(deal)
-        })
+        return new Promise((resolve, reject) => {
+            Deal.findById(req.params.id).populate().then(deal => {
+                deal.vote.forEach(element => {
+                    if (element==req.body.username){
+                        res=1;
+                    }
+                })
+                if(res>0){
+                    reject({ erreur: "vous avez deja voté pour ce deal" });   
+                }else {
+                    deal.compteur = deal.compteur - 1;
+                    deal.vote.push(req.body.username);
+                    deal.save();
+                    resolve(deal);
+                }
+             }) 
+            })
     },
     afficherDealsUser: (req, res) => {
         Deal.find({ "username": req.params.username }).then(deals => {

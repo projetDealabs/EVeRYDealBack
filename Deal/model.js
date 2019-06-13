@@ -17,6 +17,7 @@ let dealSchema = new mongoose.Schema({
         ref: "Comment",
         required: "Comment is Required"
       }],
+    vote:[String],
         
 });
 
