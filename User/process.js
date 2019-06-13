@@ -24,29 +24,23 @@ module.exports = {
                     })
                     if (req.body.email == null || req.body.username == null || req.body.password == null) {
                         reject({ 'Erreur': 'Paramètre manquant' });
-                        //return res.status(400).json({ 'Erreur': 'Paramètre manquant' });
                     }
                     else if (req.body.username.length >= 13 || req.body.username.length <= 4) {
                         reject({ 'Erreur': 'Nombre de caractère pour l\'\ utilisateur doit etre compris en 5 et 13' });
-                        //return res.status(400).json({ 'Erreur': 'Nombre de caractère pour l\'\ utilisateur doit etre compris en 5 et 13' });
                     }
                     else if (!EMAIL_REGEX.test(req.body.email)) {
                         reject({ 'Erreur': 'Email invalide' });
-                        //return res.status(400).json({ 'Erreur': 'Email invalide' });
                     }
                     else if (!PASSWORD_REGEX.test(req.body.password)) {
                         reject({ 'Erreur': 'Mot de passe invalide ! taille doit etre entre 4 et 8 et contenir au moins 1 chiffre' });
-                        //return res.status(400).json({ 'Erreur': 'Mot de passe invalide ! taille doit etre entre 4 et 8 et contenir au moins 1 chiffre' });
                     }
                     else {
                         resolve(newUser.save().then(res.send(newUser)));
-                        //return newUser.save().then(res.send(newUser));
                     }
                 })
             }
             else {
                 reject({ 'Erreur': 'Utilisateur déjà existant' });
-                //return res.status(409).json({ 'Erreur': 'Utilisateur déjà existant' });
             }
 
 
@@ -61,19 +55,16 @@ module.exports = {
                 if (user.length == 1) {
                     bcrypt.compare(req.body.password, user[0].password, function (errBycrypt, resBycrypt) {
                         // est que le mdp est correct
-                        if (resBycrypt) {
-                           // return res.status(200).json({
+                        if (resBycrypt) {                           
                             resolve( {'token': jwtutils.generateTokenForUser(user[0])})
                             // est le mdp est incorrect
                         } else {
-                            reject({ 'Erreur': 'Utilisateur ou mot de passe invalide' });
-                            // return res.status(403).json({ 'Erreur': 'Utilisateur ou mot de passe invalide' })
+                            reject({ 'Erreur': 'Utilisateur ou mot de passe invalide' });                           
                         }
                     })
                     // si l'user n'existe pas     
                 } else {
                     reject({ 'Erreur': 'Utilisateur ou mot de passe invalide' });
-                    //res.json({ 'Erreur': 'Utilisateur ou mot de passe invalide' }) }
             }});
         })
     },
@@ -83,11 +74,9 @@ module.exports = {
             let userId = jwtutils.getUserId(headerAuth);
             if (userId < 0) {
                 reject({ 'Erreur': 'mauvais token' });
-                //return res.status(400).json({ 'Erreur': 'mauvais token' });
             }
             else {
                 resolve(userId);
-                //res.json(userId);
             }
         })
     }
