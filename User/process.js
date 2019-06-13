@@ -12,7 +12,7 @@ module.exports = {
 
     // s'enregistrer
     register: (req, res) => {
-
+        return new Promise((resolve, reject) => {
         models.find({ username: req.body.username }).then(user => {
             if (user.length == 0) {
                 bcrypt.hash(req.body.password, 5, function (err, bcryptedPassword) {
@@ -23,61 +23,73 @@ module.exports = {
                         role: 1,
                     })
                     if (req.body.email == null || req.body.username == null || req.body.password == null) {
-                        return res.status(400).json({ 'Erreur': 'Paramètre manquant' });
+                        reject({ 'Erreur': 'Paramètre manquant' });
+                        //return res.status(400).json({ 'Erreur': 'Paramètre manquant' });
                     }
                     else if (req.body.username.length >= 13 || req.body.username.length <= 4) {
-                        return res.status(400).json({ 'Erreur': 'Nombre de caractère pour l\'\ utilisateur doit etre compris en 5 et 13' });
+                        reject({ 'Erreur': 'Nombre de caractère pour l\'\ utilisateur doit etre compris en 5 et 13' });
+                        //return res.status(400).json({ 'Erreur': 'Nombre de caractère pour l\'\ utilisateur doit etre compris en 5 et 13' });
                     }
                     else if (!EMAIL_REGEX.test(req.body.email)) {
-                        return res.status(400).json({ 'Erreur': 'Email invalide' });
+                        reject({ 'Erreur': 'Email invalide' });
+                        //return res.status(400).json({ 'Erreur': 'Email invalide' });
                     }
                     else if (!PASSWORD_REGEX.test(req.body.password)) {
-                        return res.status(400).json({ 'Erreur': 'Mot de passe invalide ! taille doit etre entre 4 et 8 et contenir au moins 1 chiffre' });
+                        reject({ 'Erreur': 'Mot de passe invalide ! taille doit etre entre 4 et 8 et contenir au moins 1 chiffre' });
+                        //return res.status(400).json({ 'Erreur': 'Mot de passe invalide ! taille doit etre entre 4 et 8 et contenir au moins 1 chiffre' });
                     }
                     else {
-                        return newUser.save().then(res.send(newUser));
+                        resolve(newUser.save().then(res.send(newUser)));
+                        //return newUser.save().then(res.send(newUser));
                     }
                 })
             }
             else {
-                return res.status(409).json({ 'Erreur': 'Utilisateur déjà existant' });
+                reject({ 'Erreur': 'Utilisateur déjà existant' });
+                //return res.status(409).json({ 'Erreur': 'Utilisateur déjà existant' });
             }
 
 
         })
-    },
+    })},
 
     //se connecter
     login: (req, res) => {
-        models.find({ username: req.body.username }).then(user => {
-            // si l'user existe
-            if (user.length == 1) {
-                bcrypt.compare(req.body.password, user[0].password, function (errBycrypt, resBycrypt) {
-                    // est que le mdp est correct
-                    if (resBycrypt) {
-                        return res.status(200).json({
-                            'token': jwtutils.generateTokenForUser(user[0])
-                        });
-                        // est le mdp est incorrect
-                    } else {
-                        return res.status(403).json({ 'Erreur': 'Utilisateur ou mot de passe invalide' })
-                    }
-
-                })
-                // si l'user n'existe pas     
-            } else { res.json({ 'Erreur': 'Utilisateur ou mot de passe invalide' }) }
-        });
-
+        return new Promise((resolve, reject) => {
+            models.find({ username: req.body.username }).then(user => {
+                // si l'user existe
+                if (user.length == 1) {
+                    bcrypt.compare(req.body.password, user[0].password, function (errBycrypt, resBycrypt) {
+                        // est que le mdp est correct
+                        if (resBycrypt) {
+                           // return res.status(200).json({
+                            resolve( {'token': jwtutils.generateTokenForUser(user[0])})
+                            // est le mdp est incorrect
+                        } else {
+                            reject({ 'Erreur': 'Utilisateur ou mot de passe invalide' });
+                            // return res.status(403).json({ 'Erreur': 'Utilisateur ou mot de passe invalide' })
+                        }
+                    })
+                    // si l'user n'existe pas     
+                } else {
+                    reject({ 'Erreur': 'Utilisateur ou mot de passe invalide' });
+                    //res.json({ 'Erreur': 'Utilisateur ou mot de passe invalide' }) }
+            }});
+        })
     },
     getuserprofile: (req, res) => {
-        let headerAuth = req.headers['authorization'];
-        let userId = jwtutils.getUserId(headerAuth);
-        if (userId < 0) {
-            return res.status(400).json({ 'Erreur': 'mauvais token' });
-        }
-        else {
-            res.json(userId);
-        }
+        return new Promise((resolve, reject) => {
+            let headerAuth = req.headers['authorization'];
+            let userId = jwtutils.getUserId(headerAuth);
+            if (userId < 0) {
+                reject({ 'Erreur': 'mauvais token' });
+                //return res.status(400).json({ 'Erreur': 'mauvais token' });
+            }
+            else {
+                resolve(userId);
+                //res.json(userId);
+            }
+        })
     }
 
 

@@ -16,7 +16,7 @@ module.exports = {
             dateFin: req.body.dateFin,
             compteur: 0,
             comments: req.body.comments,
-            //picture: req.file.filename,
+            picture: req.file.filename,
             vote: req.body.vote,
         });
 

@@ -4,16 +4,10 @@ app.use(bodyParser.json());
 const action = require('./action');
 
 
-app.post('/users/register', function (req, res, body) {
-    action.register(req, res);
-})
+app.post('/users/register',action.register);
 
-app.post('/users/login', function (req, res) {
-    action.login(req, res);
-})
+app.post('/users/login',action.login);
 
-app.post('/users/decrypt', function (req, res) {
-    action.decrypt(req, res)
-});
+app.post('/users/decrypt',action.decrypt);
 
 module.exports = app;
