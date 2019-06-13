@@ -1,7 +1,6 @@
 // importer mongoose
 const mongoose = require('mongoose');
 
-// passer en parametre un obj qui contient les différents champs 
 let dealSchema = new mongoose.Schema({
     name: String,
     prix: Number,
@@ -16,8 +15,9 @@ let dealSchema = new mongoose.Schema({
         ref: "Comment",
         required: "Comment is Required"
       }],
+      vote:[String],
         
 });
 
 let Deal = mongoose.model('Deal', dealSchema);
-module.exports = Deal; //exporter mon model
+module.exports = Deal; 

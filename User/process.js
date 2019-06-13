@@ -21,9 +21,6 @@ module.exports = {
                         username: req.body.username,
                         password: bcryptedPassword,
                         role: 1,
-
-
-
                     })
                     if (req.body.email == null || req.body.username == null || req.body.password == null) {
                         return res.status(400).json({ 'Erreur': 'Paramètre manquant' });
